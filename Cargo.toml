@@ -1,0 +1,10 @@
+[package]
+name = "yt_m4a"
+version = "0.1.0"
+edition = "2021"
+authors = ["i0ape"]
+
+[dependencies]
+url = "2.3.1"
+
+[dev-dependencies]
