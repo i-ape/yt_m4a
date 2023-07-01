@@ -6,7 +6,7 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
     let output_dir = "out";
     std::fs::create_dir_all(output_dir).expect("Failed to create output directory");
 
-    let mut command = Command::new("yt-dlp");`jj
+    let mut command = Command::new("yt-dlp");
     command.args(&[
         "-x",
         "--audio-format",
