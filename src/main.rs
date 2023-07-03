@@ -7,7 +7,7 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
     std::fs::create_dir_all(output_dir).expect("Failed to create output directory");
 
     let mut command = Command::new("yt-dlp");
-    command.args(&[
+    command.args([
         "-x",
         "--audio-format",
         "m4a",
@@ -28,13 +28,13 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
             .read_line(&mut playlist_name)
             .expect("Failed to read input");
 
-        let playlist_name = sanitize_directory_name(&playlist_name.trim());
+        let playlist_name = sanitize_directory_name(playlist_name.trim());
 
         let playlist_dir = format!("{}/{}", output_dir, playlist_name);
         fs::create_dir_all(&playlist_dir).expect("Failed to create playlist directory");
 
         // Update the command arguments with playlist name appended to file names
-        command.args(&[
+        command.args([
             &format!("{}/%(playlist_index)s - %(title)s.%(ext)s", playlist_dir),
             "--yes-playlist",
         ]);
@@ -90,4 +90,3 @@ fn main() {
 
     download_and_convert_to_m4a(youtube_link, is_playlist, audio_quality);
 }
-// i dont what the error is :/
