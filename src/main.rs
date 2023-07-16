@@ -64,7 +64,11 @@ fn sanitize_directory_name(name: &str) -> String {
         .collect::<String>();
     sanitized_name.trim().to_owned()
 }
+<<<<<<< HEAD
+
+=======
 // test github-dev
+>>>>>>> 1a2a1b9a228c912bdf5b054f2aec1401d25129f6
 fn main() {
     let mut youtube_link = String::new();
 
@@ -90,3 +94,4 @@ fn main() {
 
     download_and_convert_to_m4a(youtube_link, is_playlist, audio_quality);
 }
+// the end 
