@@ -2,7 +2,7 @@
 
 cli rust tool with yt-dlp
 
-#known issues
+# known issues
 
 when down loading a playlist, the files are not moved to a folder that is  not the name intended
 when 2nd playlist is downloaded, the files are not moved to a folder that is  not the name in
