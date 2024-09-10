@@ -1,11 +1,14 @@
-this is the main project to complete 
+# yt_m4a
 
-known issues
+cli rust tool with yt-dlp
 
-when down loading a playlist, the files are not moved to a folder that is  not the name intended
-when 2nd playlist is downloaded, the files are not moved to a folder that is  not the name in
+can get playlists and single files
 
+when playlist it numbers tracks
 
-this file does most of what i want but has a load of flaws
+asks for folder name 
 
-next create rust ffmpeg that if playlist downloaded it puts them in a folder 
+gives 1-10 quality options
+
+it now has a nice simple gui with rofi
+
