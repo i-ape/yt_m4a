@@ -12,3 +12,4 @@ gives 1-10 quality options
 
 it now has a nice simple gui with rofi
 
+test
