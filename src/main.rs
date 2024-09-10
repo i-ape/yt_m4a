@@ -1,7 +1,6 @@
 use std::fs;
-use std::io::Write;
 use std::process::Command;
-
+//now its very cozy :)
 fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_quality: u32) {
     let output_dir = "out";
     std::fs::create_dir_all(output_dir).expect("Failed to create output directory");
@@ -60,7 +59,7 @@ fn sanitize_directory_name(name: &str) -> String {
 
 fn get_input_from_rofi(prompt: &str) -> String {
     let rofi_output = Command::new("rofi")
-        .args(&["-dmenu", "-p", prompt])
+        .args(["-dmenu", "-p", prompt])
         .output()
         .expect("Failed to launch rofi");
 
