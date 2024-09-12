@@ -2,12 +2,12 @@
 
 cli rust tool with yt-dlp
 
-# known issues
+can get playlists and single files
 
-when down loading a playlist, the files are not moved to a folder that is  not the name intended
-when 2nd playlist is downloaded, the files are not moved to a folder that is  not the name in
+when playlist it numbers tracks
 
+asks for folder name 
 
-this file does most of what i want but has a load of flaws
+gives 1-10 quality options
 
-next create rust ffmpeg that if playlist downloaded it puts them in a folder 
+it now has a nice simple gui with rofi
