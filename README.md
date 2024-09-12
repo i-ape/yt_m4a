@@ -1,3 +1,4 @@
+<<<<<<< main
 # yt_m4a
 
 cli rust tool with yt-dlp
@@ -11,3 +12,5 @@ asks for folder name
 gives 1-10 quality options
 
 it now has a nice simple gui with rofi
+=======
+>>>>>>> local
