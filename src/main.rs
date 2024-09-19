@@ -1,6 +1,7 @@
-use std::fs;
+make this use rofi to use std::fs;
+use std::io::{self, Write};
 use std::process::Command;
-//now its very cozy :)
+// 1year on this is my go to audio tool :)
 fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_quality: u32) {
     let output_dir = "out";
     std::fs::create_dir_all(output_dir).expect("Failed to create output directory");
@@ -19,13 +20,20 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
     ]);
 
     if is_playlist {
-        // Use Rofi to ask for the playlist name
-        let playlist_name = get_input_from_rofi("Enter playlist name:");
+        // Ask for the playlist name
+        print!("Enter the playlist name: ");
+        io::stdout().flush().unwrap();
+        let mut playlist_name = String::new();
+        io::stdin()
+            .read_line(&mut playlist_name)
+            .expect("Failed to read input");
+
         let playlist_name = sanitize_directory_name(playlist_name.trim());
 
         let playlist_dir = format!("{}/{}", output_dir, playlist_name);
         fs::create_dir_all(&playlist_dir).expect("Failed to create playlist directory");
 
+        // Update the command arguments with playlist name appended to file names
         command.args([
             &format!("{}/%(playlist_index)s - %(title)s.%(ext)s", playlist_dir),
             "--yes-playlist",
@@ -50,33 +58,36 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
 
 fn sanitize_directory_name(name: &str) -> String {
     let invalid_chars = ['\\', '/', ':', '*', '?', '"', '<', '>', '|'];
-    name.chars()
+    let sanitized_name = name
+        .chars()
         .filter(|&c| !invalid_chars.contains(&c))
-        .collect::<String>()
-        .trim()
-        .to_owned()
-}
-
-fn get_input_from_rofi(prompt: &str) -> String {
-    let rofi_output = Command::new("rofi")
-        .args(["-dmenu", "-p", prompt])
-        .output()
-        .expect("Failed to launch rofi");
-
-    String::from_utf8(rofi_output.stdout)
-        .expect("Invalid UTF-8 from rofi")
-        .trim()
-        .to_string()
+        .collect::<String>();
+    sanitized_name.trim().to_owned()
 }
 
 fn main() {
-    // Use Rofi to ask for the YouTube link
-    let youtube_link = get_input_from_rofi("Enter YouTube or playlist link:");
+    let mut youtube_link = String::new();
+
+    print!("Enter the YouTube link or playlist link: ");
+    io::stdout().flush().unwrap();
+    io::stdin()
+        .read_line(&mut youtube_link)
+        .expect("Failed to read input");
+
+    let youtube_link = youtube_link.trim();
+
     let is_playlist = youtube_link.contains("playlist");
 
-    // Use Rofi to select audio quality
-    let audio_quality_input = get_input_from_rofi("Enter audio quality (0 - best, 9 - worst):");
+    // Ask for audio quality
+    let mut audio_quality_input = String::new();
+    print!("Enter audio quality (0 - best, 9 - worst): ");
+    io::stdout().flush().unwrap();
+    io::stdin()
+        .read_line(&mut audio_quality_input)
+        .expect("Failed to read input");
+
     let audio_quality: u32 = audio_quality_input.trim().parse().unwrap_or(0);
 
-    download_and_convert_to_m4a(&youtube_link, is_playlist, audio_quality);
+    download_and_convert_to_m4a(youtube_link, is_playlist, audio_quality);
 }
+// the end
