@@ -1,7 +1,37 @@
 use std::fs;
 use std::io::{self, Write};
 use std::process::Command;
-// 1year on this is my go to audio tool :)
+
+// Function to embed metadata using ffmpeg
+fn embed_metadata(file_path: &str, artist: &str, track: &str, album: &str) {
+    let mut command = Command::new("ffmpeg");
+    command.args([
+        "-i",
+        file_path,
+        "-metadata",
+        &format!("artist={}", artist),
+        "-metadata",
+        &format!("title={}", track),
+        "-metadata",
+        &format!("album={}", album),
+        "-codec",
+        "copy",                                      // Don't re-encode, just copy the file
+        &format!("{}_with_metadata.m4a", file_path), // Save to a new file with embedded metadata
+    ]);
+
+    let output = command.output().expect("Failed to execute ffmpeg command");
+
+    if output.status.success() {
+        println!("Metadata embedded successfully into {}!", file_path);
+    } else {
+        eprintln!("Embedding metadata failed!");
+        if let Ok(stderr) = String::from_utf8(output.stderr) {
+            eprintln!("ffmpeg error message:\n{}", stderr);
+        }
+    }
+}
+
+// Function to download and convert YouTube audio to m4a
 fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_quality: u32) {
     let output_dir = "out";
     std::fs::create_dir_all(output_dir).expect("Failed to create output directory");
@@ -48,6 +78,15 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
 
     if command_output.status.success() {
         println!("Download and conversion complete!");
+
+        // Extract the output file path and auto-generate metadata for embedding
+        let downloaded_file = format!("{}/%(title)s.m4a", output_dir);
+        let artist = "Default Artist"; // Replace with metadata retrieval logic if needed
+        let track = "Default Track";
+        let album = "Default Album";
+
+        // Embed metadata after downloading
+        embed_metadata(&downloaded_file, artist, track, album);
     } else {
         eprintln!("Download and conversion failed!");
         if let Ok(stderr) = String::from_utf8(command_output.stderr) {
@@ -56,6 +95,7 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
     }
 }
 
+// Function to sanitize the playlist or file name by removing invalid characters
 fn sanitize_directory_name(name: &str) -> String {
     let invalid_chars = ['\\', '/', ':', '*', '?', '"', '<', '>', '|'];
     let sanitized_name = name
@@ -88,6 +128,6 @@ fn main() {
 
     let audio_quality: u32 = audio_quality_input.trim().parse().unwrap_or(0);
 
+    // Download and convert to m4a, then embed metadata
     download_and_convert_to_m4a(youtube_link, is_playlist, audio_quality);
 }
-// the end
