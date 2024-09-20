@@ -1,4 +1,4 @@
-make this use rofi to use std::fs;
+use std::fs;
 use std::io::{self, Write};
 use std::process::Command;
 // 1year on this is my go to audio tool :)
