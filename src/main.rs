@@ -39,7 +39,7 @@ fn download_and_convert_to_m4a(youtube_link: &str, is_playlist: bool, audio_qual
             "--yes-playlist",
         ]);
     } else {
-        command.arg(&format!("{}/%(title)s.%(ext)s", output_dir));
+        command.arg(format!("{}/%(title)s.%(ext)s", output_dir));
     }
 
     command.arg(youtube_link);
