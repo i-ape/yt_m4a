@@ -9,14 +9,8 @@ when playlist it numbers tracks
 asks for folder name 
 
 gives 1-10 quality options
-
-it now has a nice simple gui with rofi
-
 ## to do
 
 revert back to terminal ui 
 
-get metadata autofill to terminal and be directly editable
-
-
-
+get metadata autofill to terminal and be directly editable, im yet to find a fliud way to do this :(
