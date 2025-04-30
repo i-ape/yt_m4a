@@ -1,5 +1,3 @@
-Here’s the improved README in full Markdown format, ready to copy:
-
 # yt_m4a
 
 **A simple Rust CLI tool for downloading and converting YouTube audio to M4A using `yt-dlp`.**
@@ -65,4 +63,3 @@ To Do
 License
 
 MIT
-
